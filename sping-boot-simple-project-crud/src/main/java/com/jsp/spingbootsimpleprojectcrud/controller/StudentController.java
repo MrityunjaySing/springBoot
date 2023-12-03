@@ -15,37 +15,27 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.jsp.spingbootsimpleprojectcrud.dto.Student;
 import com.jsp.spingbootsimpleprojectcrud.response.ResponseStructure;
 import com.jsp.spingbootsimpleprojectcrud.service.StudentService;
 
 @RestController
-@RequestMapping(value = "getStudent")
+@RequestMapping(value = "student")
 public class StudentController {
 
 	@Autowired
 	private StudentService service;
 
-	@GetMapping(value = "/myData")
-	public String getData() {
-		return " Today date is " + LocalDate.now();
-	}
-
-	@GetMapping(value = "/addTwoNumber/{a}/{b}")
-	public int addTwoNumber(@PathVariable Integer a, @PathVariable Integer b) {
-		return a + b;
-	}
 /*
  * StudentData inserted
  * */
 	
-	@PostMapping(value ="/saveStudent")
+	@PostMapping(value ="/create")
 	public ResponseStructure<Student> saveStudentController(@RequestBody Student student){
 		return service.saveStudentService(student);
 	}
 	
-	@DeleteMapping("/deleteStudent/{studentId}")
+	@DeleteMapping("/delete/{studentId}")
 	public ResponseStructure<Student> deleteStudentById(@PathVariable int studentId) {
 		return service.deleteStudentById(studentId);
 	}
@@ -53,7 +43,7 @@ public class StudentController {
 	/*
 	 * Update user name by user id
 	 * */
-	@PutMapping(value = "/updateStudentName/{studentId}/{studentName}")
+	@PutMapping(value = "/update/{studentId}/{studentName}")
 	public Student updateStudentNameById( @PathVariable int  studentId, @PathVariable String studentName) {
 		return service.updateStudentNameByIdService(studentId, studentName);
 	}
@@ -66,14 +56,14 @@ public class StudentController {
 	/*
 	 * find all method
 	 */
-	@GetMapping(value = "/getAllData")
+	@GetMapping(value = "/getAllStudents")
 	public ResponseStructure<List<Student>> getAllStudentDataController() {
 
 		return service.getAllStudentDataService();
 	}
 	
 	//save multiple data 
-	@PostMapping(value = "/saveMultipleStudent")
+	@PostMapping(value = "/createMany")
 	public ResponseStructure<List<Student>> saveMultipleStudentController(@RequestBody List<Student> students){
 		
 		return service.saveMultipleStudentDao(students);
@@ -85,7 +75,7 @@ public class StudentController {
 	}
 	
 	//getByEmail
-	@GetMapping("/getStudentEmail/{studentEmail}")
+	@GetMapping("/getStudentByEmail/{studentEmail}")
 	public Student findByStudentEmailService(@PathVariable String studentEmail) {
 		return service.findByStudentEmailService(studentEmail);
 	}
